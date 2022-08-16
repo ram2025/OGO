@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register-in</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        
+        label {
+            margin: 20px;
+        }
+        
+        .input {
+            margin-top: 20px;
+        }
+        
+        p {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Register Account</h1>
+    <form action="register" method="post">
+        <div class="input">
+            <label for="username">User-Name:<input name="username" type="text" required/></label><br/>
+        </div>
+        <div class="input">
+            <label for="password">Password :<input name="password" type="password" required/> </label><br />
+        </div>
+        <div class="input">
+            <label for="re-password">Confirm-Password :<input name="repassword" type="password" required/> </label>
+            <p>
+                <%= name %>
+            </p>
+        </div>
+        <div class="input">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+    <form action="/login" method="get">
+        <button>Log-In</button>
+    </form>
+</body>
+
+</html>
