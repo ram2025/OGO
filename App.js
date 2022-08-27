@@ -1,30 +1,30 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const { MongoClient } = require('mongodb');
 const bcrypt = require('bcryptjs');
-const uri = 'mongodb://localhost:27017/sessions';
-const client = new MongoClient(uri);
-client.connect();
-const database = client.db('local');
-
 const app = express();
+const mongoose = require('mongoose');
+const DB = 'mongodb+srv://sky:sky@cluster0.de1mtdi.mongodb.net/?retryWrites=true&w=majority';
+mongoose.connect(DB).then(() => {
+    console.log("connection successful");
+}).catch((err) => {
+    console.log("connection not successful");
+});
+
+var BookSchema = mongoose.Schema({
+    username: String,
+    password: String
+});
+
+var Book = mongoose.model('Book', BookSchema, 'bookstore');
 
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
-
-const store = new MongoDBStore({
-    uri: uri,
-    collection: 'mySessions'
-});
-
 
 app.use(session({
     secret: 'ram-dhanu',
     resave: false,
     saveUninitialized: false,
-    store: store,
 }));
 
 
@@ -41,9 +41,8 @@ app.post('/register', async(req, res) => {
         })
     }
     const pass = await bcrypt.hash(req.body.password, 10);
-    client.connect();
-    await database.collection("local").insertOne({ username: req.body.username, password: pass });
-    await client.close();
+    const book1 = new Book({ username: req.body.username, password: pass });
+    book1.save();
     res.redirect('/login');
 })
 
@@ -54,20 +53,19 @@ app.get('/login', (req, res) => {
 })
 app.post('/login', async(req, res) => {
     let { username, password } = req.body;
-    await client.connect();
-    const user = await database.collection("local").findOne({ username: username });
-    if (!user) {
+    const user = await Book.find({ username: username });
+    if (user === []) {
         return res.render('./login.ejs', {
             name: "This username and password does not exist",
         });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user[0].password);
     if (!isMatch) {
         return res.render('./login.ejs', {
             name: "This username and password does not exist",
         });
     }
-    if (username !== user.username) {
+    if (username !== user[0].username) {
         return res.render('./login.ejs', {
             name: "This username and password does not exist",
         });

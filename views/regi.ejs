@@ -29,7 +29,7 @@
     <h1>Register Account</h1>
     <form action="register" method="post">
         <div class="input">
-            <label for="username">User-Name:<input name="username" type="text" required/></label><br/>
+            <label for="username">Gmail:<input name="username" type="email" required/></label><br/>
         </div>
         <div class="input">
             <label for="password">Password :<input name="password" type="password" required/> </label><br />
@@ -45,7 +45,9 @@
         </div>
     </form>
     <form action="/login" method="get">
-        <button>Log-In</button>
+        <div>
+            If you have already acount please - <button>Log-In</button>
+        </div>
     </form>
 </body>
 
