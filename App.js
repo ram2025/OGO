@@ -4,11 +4,11 @@ const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const app = express();
 const mongoose = require('mongoose');
-const DB = 'mongodb+srv://sky:sky@cluster0.de1mtdi.mongodb.net/?retryWrites=true&w=majority';
+const DB = 'mongodb+srv://sky:sky@cluster0.de1mtdi.mongodb.net/todo?retryWrites=true&w=majority';
 mongoose.connect(DB).then(() => {
     console.log("connection successful");
 }).catch((err) => {
-    console.log("connection not successful");
+    console.log(err);
 });
 
 var BookSchema = mongoose.Schema({
