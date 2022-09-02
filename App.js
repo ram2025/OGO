@@ -88,5 +88,4 @@ app.get('/logout', (req, res) => {
     res.redirect('/login');
 });
 
-const port = process.env.PORT || 5000;
-app.listen(port);
+app.listen(process.env.PORT || 3000);
