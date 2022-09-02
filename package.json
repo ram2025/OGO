@@ -8,7 +8,7 @@
         "mongodb": "^4.8.1",
         "mongoose": "^6.5.3",
         "nodemailer": "^6.7.8",
-        "start": "App.js"
+        "start": "node App.js"
     },
     "devDependencies": {
         "cypress": "^10.5.0",
